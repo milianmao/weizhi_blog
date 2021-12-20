@@ -1,0 +1,30 @@
+server:
+  port: 11001
+spring:
+  application:
+    name: blog-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 1.117.157.193:8848
+      config:
+        server-addr: 1.117.157.193:8848
+        file-extension: yml
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedHeaders: "*"
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTION
+      routes:
+        - id: admin
+          uri: lb://blog-admin
+          predicates:
+            - Path=/admin/**
